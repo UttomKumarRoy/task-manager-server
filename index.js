@@ -65,6 +65,20 @@ async function run() {
             res.send(result);
         })
 
+        app.put('/comment/:id', async (req,res) =>{
+            const id = req.params.id;
+            const task=req.body;
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true };
+            const updatedDoc = {
+                $set: {
+                    comment: task.comment
+                }
+            }
+            const result = await tasksCollection.updateOne(filter, updatedDoc, options);
+            res.send(result);
+        })
+
         app.put('/myTaskModal/:id', async (req,res) =>{
             const id = req.params.id;
             const task=req.body;
